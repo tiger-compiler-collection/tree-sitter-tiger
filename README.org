@@ -5,7 +5,7 @@ This is a simplest tree-sitter implementation for Tiger Language from Appel's
 
 ** Using the tree-sitter
 
-If you are using Emacs, you can use the [[https://github.com/https://github.com/tiger-compiler-collection/tiger-ts-mode][tiger-ts-mode]] and download the latest
+If you are using Emacs, you can use the [[https://github.com/tiger-compiler-collection/tiger-ts-mode][tiger-ts-mode]] and download the latest
 release from this repository.
 
 ** Todo

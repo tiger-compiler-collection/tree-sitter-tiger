@@ -7,7 +7,7 @@
       "title": "Tiger",
       "scope": "source.tiger",
       "file-types": [
-        ".tig"
+        "tig"
       ],
       "injection-regex": "^tiger$",
       "class-name": "TreeSitterTiger"

@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-tiger",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Tiger grammar for tree-sitter",
   "type": "module",
   "repository": {
