@@ -30,6 +30,14 @@ bool tree_sitter_tiger_external_scanner_scan(
 ) {
   int comment_depth = 0;
 
+  if (!valid_symbols[COMMENT])
+    return false;
+
+  while (lexer->lookahead == ' ' || lexer->lookahead == '\t' ||
+         lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+    lexer->advance(lexer, true);
+  }
+
   if (lexer->lookahead == '/' && valid_symbols[COMMENT]) {
     lexer->advance(lexer, false);
     if (lexer->lookahead == '*') {
@@ -72,7 +80,7 @@ comment:
     lexer->advance(lexer, false);
     prev = current;
   }
-  
+
   // handle unclosed comment
   if (lexer->eof(lexer) && comment_depth > 0) {
     return false;

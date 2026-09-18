@@ -1,0 +1,23 @@
+* Tree-sitter-tiger
+
+This is a simplest tree-sitter implementation for Tiger Language from Appel's
+/Modern Compiler Implementation/, based on the [[https://www.cambridge.org/core/books/modern-compiler-implementation-in-ml/appendix-tiger-language-reference-manual/][reference manual]].
+
+** Using the tree-sitter
+
+If you are using Emacs, you can use the [[https://github.com/https://github.com/tiger-compiler-collection/tiger-ts-mode][tiger-ts-mode]] and download the latest
+release from this repository.
+
+** Todo
+
+Currently, this tree-sitter does not always render the comparison correctly
+because tree-sitter does not have an option similar to ~%nonassoc~ in yacc, see
+the issue [[https://github.com/tree-sitter/tree-sitter/issues/761][here]].
+
+This tree-sitter does not handle escape of one or more formatting characters (a
+subset of the non-printable characters including at least space, tab, newline,
+formfeed) in the string literals.
+
+** License
+
+LGPL-3.0-or-later.  See [[file:LICENSE][LICENSE]] for LGPL v3 and [[file:COPYING][COPYING]] for the accompanying GPL v3 terms.

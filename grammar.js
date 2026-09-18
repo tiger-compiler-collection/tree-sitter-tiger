@@ -1,7 +1,7 @@
 /**
  * @file Tiger grammar for tree-sitter
  * @author Pusen Yi
- * @license GPLv3
+ * @license LGPL-3.0-or-later
  */
 
 /// <reference path="./types/dsl.d.ts" />
@@ -14,33 +14,53 @@ export default grammar({
     $.comment,
   ],
 
+  conflicts: $ => [
+    [$.type_id, $.lvalue], // type_id is using the same pattern as lvalue
+  ],
+
   extras: ($) => [
     /\s/, // whitespace
     $.comment,
   ],
 
+  word: $ => $.identifier,
+
   rules: {
     // TODO: add the actual grammar rules
     // a source_file is just an expression
-    source_file: $ => $.expression,
+    source_file: $ => $._expression,
 
     identifier: _ => /[a-zA-Z][a-zA-Z0-9_]*/,
-    type_id: _ => /[a-zA-Z_]+/, // what is the actual type_id naming requirements?
+    type_id: $ => $.identifier, // what is the actual type_id naming requirements?
     int_literal: _ => /[0-9]+/,
-    string_literal: _ => /\"[a-zA-Z]*\"/,
+    string_literal: _ => token(seq(
+      '"',
+      repeat(choice(
+        /[^"\\]/,
+        /\\[nt"\\]/,
+        /\\[0-9]{3}/,
+        /\\\^[@A-Z\[\\\]\^_]/,
+        /\\[ \t\n\r\f]+\\/,
+      )),
+      '"',
+    )),
 
     declaration: $ => repeat1(choice($.variable_dec, $.function_dec, $.type_dec)),
 
-    variable_dec: $ => seq("var", $.identifier, optional(seq(":", $.type_id))),
+    variable_dec: $ => seq("var", $.identifier,
+      optional(seq(":", $.type_id)), ":=", $._expression
+    ),
+
     function_dec: $ => seq(
       "function", $.identifier, "(", optional($.type_fields), ")",
-      optional(seq(":", $.type_id)), "=", $.expression
+      optional(seq(":", $.type_id)), "=", $._expression
     ),
 
     type_dec: $ => seq("type", $.type_id, "=", $.type),
 
     type: $ => choice(
       $.type_id,
+      seq("{", "}"),
       seq("{", $.type_fields, "}"),
       seq("array", "of", $.type_id),
     ),
@@ -49,12 +69,11 @@ export default grammar({
       $.identifier, ":", $.type_id,
       repeat(seq(",", $.identifier, ":", $.type_id)),
     ),
-      
+
     // in the appendix of Appel's compiler book it requires some typed expr but
     // in the tree-sitter
-    expression: $ => choice(
+    _expression: $ => choice(
       $.lvalue,
-      $.function_call,
       $.assignment,
       $.record,
       $.function_call,
@@ -68,93 +87,89 @@ export default grammar({
       $.let_expr,
       "break", // break should only be used in for or while loop
       "nil",
-      seq("(", $.expression, repeat1(seq(";", $.expression)), ")"),
-      // $.int_literal,
-      // $.string_literal,
+      seq("(", $._expression, repeat1(seq(";", $._expression)), ")"),
+      $.int_literal,
+      $.string_literal,
       // negation is more like a unary operation, has hight precedence
-      // prec(7, seq("-", $.expression)),
-      // $.arithmetic_expr,
+      prec(7, seq("-", $._expression)),
+      $.arithmetic_expr,
       $.compare_expr,
-      // $.boolean_expr,
-      $._simple_expression,
+      $.boolean_expr,
       $.array_expr,
-      seq("(", $.expression, ")"),
+      seq("(", optional($._expression), ")"),
     ),
 
     lvalue: $ => choice(
       $.identifier,
       seq($.lvalue, ".", $.identifier),
-      seq($.lvalue, "[", $.expression, "]"),
+      seq($.lvalue, "[", $._expression, "]"),
     ),
 
-    assignment: $ => prec(1, seq($.lvalue, ":=", $.expression)),
+    assignment: $ => prec(1, seq($.lvalue, ":=", $._expression)),
 
-    record: $ => seq($.type_id, "{",
-      $.identifier, "=", $.expression,
-      repeat(seq(",", $.identifier, "=", $.expression)),
-      "}"
+    record: $ => choice(
+      seq($.type_id, "{", "}"),
+      seq($.type_id, "{",
+        $.identifier, "=", $._expression,
+        repeat(seq(",", $.identifier, "=", $._expression)),
+        "}"
+      )
     ),
-    
+
     function_call: $ => choice(
       seq($.identifier, "(", ")"),
       seq($.identifier, "(",
-          $.expression, repeat(seq(",", $.expression)),
+          $._expression, repeat(seq(",", $._expression)),
         ")"),
     ),
 
     if_expr: $ => choice(
-      prec.right(seq("if", $.expression, "then", $.expression)),
+      prec.right(seq("if", $._expression, "then", $._expression)),
       prec.right(
-        seq("if", $.expression, "then", $.expression, "else", $.expression)
+        seq("if", $._expression, "then", $._expression, "else", $._expression)
       ),
     ),
 
-    while_expr: $ => seq("while", $.expression, "do", $.expression),
+    while_expr: $ => seq("while", $._expression, "do", $._expression),
 
     for_expr: $ => seq(
-      "for", $.identifier, ":=", $.expression, "to", $.expression, "do",
-      $.expression
+      "for", $.identifier, ":=", $._expression, "to", $._expression, "do",
+      $._expression
     ),
 
     let_expr: $ => choice(
-      seq("let", $.declaration, "in", "end"),
-      seq("let", $.declaration, "in", $.expression, "end"),
-      seq("let", $.declaration, "in",
-        seq($.expression, repeat1(seq(";", $.expression))),
+      seq("let", optional($.declaration), "in", "end"),
+      seq("let", optional($.declaration), "in", $._expression, "end"),
+      seq("let", optional($.declaration), "in",
+        seq($._expression, repeat1(seq(";", $._expression))),
         "end"),
     ),
 
     // apply to int type expr
     arithmetic_expr: $ => choice(
-      prec.left(6, seq($._simple_expression, "*", $._simple_expression)),
-      prec.left(6, seq($._simple_expression, "/", $._simple_expression)),
-      prec.left(5, seq($._simple_expression, "+", $._simple_expression)),
-      prec.left(5, seq($._simple_expression, "-", $._simple_expression)),
+      prec.left(6, seq($._expression, "*", $._expression)),
+      prec.left(6, seq($._expression, "/", $._expression)),
+      prec.left(5, seq($._expression, "+", $._expression)),
+      prec.left(5, seq($._expression, "-", $._expression)),
     ),
 
     // apply to int and string type expr
+    // tree-sitter cannot use nonassoc to limit the assocativity for comparsion
+    // this is not expressive enough.
     compare_expr: $ => choice(
-      prec(4, seq($._simple_expression, "=", $._simple_expression)),
-      prec(4, seq($._simple_expression, "<>", $._simple_expression)),
-      prec(4, seq($._simple_expression, ">", $._simple_expression)),
-      prec(4, seq($._simple_expression, "<", $._simple_expression)),
-      prec(4, seq($._simple_expression, ">=", $._simple_expression)),
-      prec(4, seq($._simple_expression, "<=", $._simple_expression)),
-    ),
-
-    _simple_expression: $ => choice(
-      $.int_literal,
-      $.string_literal,
-      $.arithmetic_expr,
-      $.boolean_expr,
-      prec(7, seq("-", $._simple_expression)),
+      prec.left(4, seq($._expression, "=", $._expression)),
+      prec.left(4, seq($._expression, "<>", $._expression)),
+      prec.left(4, seq($._expression, ">", $._expression)),
+      prec.left(4, seq($._expression, "<", $._expression)),
+      prec.left(4, seq($._expression, ">=", $._expression)),
+      prec.left(4, seq($._expression, "<=", $._expression)),
     ),
 
     boolean_expr: $ => choice(
-      prec.left(3, seq($._simple_expression, "&", $._simple_expression)),
-      prec.left(2, seq($._simple_expression, "|", $._simple_expression)),
+      prec.left(3, seq($._expression, "&", $._expression)),
+      prec.left(2, seq($._expression, "|", $._expression)),
     ),
 
-    array_expr: $ => seq($.type_id, "[", $.expression, "]", "of", $.expression),
+    array_expr: $ => seq($.type_id, "[", $._expression, "]", "of", $._expression),
   }
 });

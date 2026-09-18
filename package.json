@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-tiger",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Tiger grammar for tree-sitter",
   "type": "module",
   "repository": {
@@ -8,13 +8,11 @@
     "url": "git+https://github.com/tiger-compiler-collection/tree-sitter-tiger.git"
   },
   "funding": "",
-  "license": "GPLv3",
+  "license": "LGPL-3.0-or-later",
   "author": {
     "name": "Pusen Yi",
     "url": ""
   },
-  "main": "bindings/node",
-  "types": "bindings/node",
   "keywords": [
     "incremental",
     "parsing",
@@ -24,34 +22,17 @@
   "files": [
     "grammar.js",
     "tree-sitter.json",
-    "binding.gyp",
-    "prebuilds/**",
-    "bindings/node/*",
     "queries/*",
-    "src/**",
-    "*.wasm"
+    "src/**"
   ],
-  "dependencies": {
-    "node-addon-api": "^8.5.0",
-    "node-gyp-build": "^4.8.4"
-  },
   "devDependencies": {
-    "prebuildify": "^6.0.1",
-    "tree-sitter": "^0.25.0",
     "tree-sitter-cli": "^0.26.11"
   },
-  "peerDependencies": {
-    "tree-sitter": "^0.25.0"
-  },
-  "peerDependenciesMeta": {
-    "tree-sitter": {
-      "optional": true
-    }
-  },
   "scripts": {
-    "install": "node-gyp-build",
+    "generate": "tree-sitter generate",
+    "build": "tree-sitter build",
+    "test": "tree-sitter test",
     "prestart": "tree-sitter build --wasm",
-    "start": "tree-sitter playground",
-    "test": "node --test bindings/node/*_test.js"
+    "start": "tree-sitter playground"
   }
 }

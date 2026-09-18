@@ -15,7 +15,7 @@
   ],
   "metadata": {
     "version": "0.1.0",
-    "license": "GNU",
+    "license": "LGPL-3.0-or-later",
     "description": "Tiger grammar for tree-sitter",
     "authors": [
       {
