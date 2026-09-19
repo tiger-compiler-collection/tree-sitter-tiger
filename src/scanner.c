@@ -3,7 +3,7 @@
 
 enum TokenType { COMMENT_BLOCK };
 
-bool process_comment(TSLexer *);
+static inline bool process_comment(TSLexer *);
 
 void * tree_sitter_tiger_external_scanner_create() {
   return NULL;
@@ -37,7 +37,7 @@ bool tree_sitter_tiger_external_scanner_scan(
   return false;
 }
 
-bool process_comment(TSLexer *lexer) {
+static inline bool process_comment(TSLexer *lexer) {
   unsigned int comment_depth = 1;
 
   // design a two char sliding window to detect nested comment depth
