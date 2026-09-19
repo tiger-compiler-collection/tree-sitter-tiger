@@ -11,7 +11,7 @@ export default grammar({
   name: "tiger",
 
   externals: $ => [
-    $.comment,
+    $.comment_block,
   ],
 
   conflicts: $ => [
@@ -20,7 +20,7 @@ export default grammar({
 
   extras: ($) => [
     /\s/, // whitespace
-    $.comment,
+    $.comment
   ],
 
   word: $ => $.identifier,
@@ -29,6 +29,8 @@ export default grammar({
     // TODO: add the actual grammar rules
     // a source_file is just an expression
     source_file: $ => $._expression,
+
+    comment: $ => seq("/*", optional($.comment_block), "*/"),
 
     identifier: _ => /[a-zA-Z][a-zA-Z0-9_]*/,
     type_id: $ => $.identifier, // what is the actual type_id naming requirements?
