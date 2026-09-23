@@ -1,6 +1,6 @@
 [
   {
-    "type": "arithmetic_expr",
+    "type": "add_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -8,7 +8,11 @@
       "required": false,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -20,11 +24,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -49,6 +49,89 @@
         },
         {
           "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
+          "named": true
+        },
+        {
+          "type": "record",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "while_expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "and_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
+          "named": true
+        },
+        {
+          "type": "array_expr",
+          "named": true
+        },
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "compare_expression",
+          "named": true
+        },
+        {
+          "type": "for_expr",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "if_expr",
+          "named": true
+        },
+        {
+          "type": "int_literal",
+          "named": true
+        },
+        {
+          "type": "let_expr",
+          "named": true
+        },
+        {
+          "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
           "named": true
         },
         {
@@ -75,7 +158,11 @@
       "required": true,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -87,11 +174,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -116,6 +199,14 @@
         },
         {
           "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
           "named": true
         },
         {
@@ -146,7 +237,11 @@
       "required": true,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -158,11 +253,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -190,70 +281,11 @@
           "named": true
         },
         {
-          "type": "record",
+          "type": "mul_expression",
           "named": true
         },
         {
-          "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "while_expr",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "boolean_expr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "arithmetic_expr",
-          "named": true
-        },
-        {
-          "type": "array_expr",
-          "named": true
-        },
-        {
-          "type": "assignment",
-          "named": true
-        },
-        {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
-          "named": true
-        },
-        {
-          "type": "for_expr",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "if_expr",
-          "named": true
-        },
-        {
-          "type": "int_literal",
-          "named": true
-        },
-        {
-          "type": "let_expr",
-          "named": true
-        },
-        {
-          "type": "lvalue",
+          "type": "or_expression",
           "named": true
         },
         {
@@ -288,7 +320,7 @@
     }
   },
   {
-    "type": "compare_expr",
+    "type": "compare_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -296,7 +328,11 @@
       "required": false,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -308,11 +344,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -337,6 +369,14 @@
         },
         {
           "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
           "named": true
         },
         {
@@ -386,7 +426,11 @@
       "required": true,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -398,11 +442,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -431,6 +471,14 @@
         },
         {
           "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
           "named": true
         },
         {
@@ -457,7 +505,11 @@
       "required": true,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -469,11 +521,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -502,6 +550,14 @@
         },
         {
           "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
           "named": true
         },
         {
@@ -528,7 +584,11 @@
       "required": true,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -540,11 +600,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -573,6 +629,14 @@
         },
         {
           "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
           "named": true
         },
         {
@@ -607,7 +671,11 @@
       "required": false,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -619,11 +687,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -651,6 +715,14 @@
           "named": true
         },
         {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
+          "named": true
+        },
+        {
           "type": "record",
           "named": true
         },
@@ -674,7 +746,11 @@
       "required": false,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -686,11 +762,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -722,6 +794,14 @@
           "named": true
         },
         {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
+          "named": true
+        },
+        {
           "type": "record",
           "named": true
         },
@@ -745,7 +825,11 @@
       "required": true,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -757,11 +841,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -790,6 +870,164 @@
         },
         {
           "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
+          "named": true
+        },
+        {
+          "type": "record",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "while_expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "mul_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
+          "named": true
+        },
+        {
+          "type": "array_expr",
+          "named": true
+        },
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "compare_expression",
+          "named": true
+        },
+        {
+          "type": "for_expr",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "if_expr",
+          "named": true
+        },
+        {
+          "type": "int_literal",
+          "named": true
+        },
+        {
+          "type": "let_expr",
+          "named": true
+        },
+        {
+          "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
+          "named": true
+        },
+        {
+          "type": "record",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "while_expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "or_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
+          "named": true
+        },
+        {
+          "type": "array_expr",
+          "named": true
+        },
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "compare_expression",
+          "named": true
+        },
+        {
+          "type": "for_expr",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "if_expr",
+          "named": true
+        },
+        {
+          "type": "int_literal",
+          "named": true
+        },
+        {
+          "type": "let_expr",
+          "named": true
+        },
+        {
+          "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
           "named": true
         },
         {
@@ -816,7 +1054,11 @@
       "required": true,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -828,11 +1070,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -861,6 +1099,14 @@
         },
         {
           "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
           "named": true
         },
         {
@@ -892,7 +1138,11 @@
       "required": false,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -904,11 +1154,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -933,6 +1179,14 @@
         },
         {
           "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
           "named": true
         },
         {
@@ -1031,7 +1285,11 @@
       "required": true,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -1043,11 +1301,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -1079,6 +1333,14 @@
           "named": true
         },
         {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
+          "named": true
+        },
+        {
           "type": "record",
           "named": true
         },
@@ -1106,7 +1368,11 @@
       "required": false,
       "types": [
         {
-          "type": "arithmetic_expr",
+          "type": "add_expression",
+          "named": true
+        },
+        {
+          "type": "and_expression",
           "named": true
         },
         {
@@ -1118,11 +1384,7 @@
           "named": true
         },
         {
-          "type": "boolean_expr",
-          "named": true
-        },
-        {
-          "type": "compare_expr",
+          "type": "compare_expression",
           "named": true
         },
         {
@@ -1147,6 +1409,14 @@
         },
         {
           "type": "lvalue",
+          "named": true
+        },
+        {
+          "type": "mul_expression",
+          "named": true
+        },
+        {
+          "type": "or_expression",
           "named": true
         },
         {

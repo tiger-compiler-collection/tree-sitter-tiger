@@ -13,7 +13,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -51,7 +52,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -94,7 +96,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -148,9 +151,11 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
-    (comment)
+    (comment
+      (comment_block))
     (declaration
       (function_dec
         (identifier)
@@ -161,17 +166,17 @@ end
         (type_id
           (identifier))
         (if_expr
-          (compare_expr
+          (compare_expression
             (lvalue
               (identifier))
             (int_literal))
           (int_literal)
-          (arithmetic_expr
+          (mul_expression
             (lvalue
               (identifier))
             (function_call
               (identifier)
-              (arithmetic_expr
+              (add_expression
                 (lvalue
                   (identifier))
                 (int_literal)))))))
@@ -201,9 +206,11 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
-    (comment)
+    (comment
+      (comment_block))
     (declaration
       (type_dec
         (type_id
@@ -216,7 +223,8 @@ end
             (identifier)
             (type_id
               (identifier)))))
-      (comment)
+      (comment
+        (comment_block))
       (type_dec
         (type_id
           (identifier))
@@ -272,7 +280,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (function_dec
@@ -286,7 +295,7 @@ end
             (identifier)))
         (function_call
           (identifier)
-          (arithmetic_expr
+          (add_expression
             (lvalue
               (identifier))
             (int_literal))))
@@ -326,7 +335,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (function_dec
@@ -342,7 +352,7 @@ end
           (identifier))
         (function_call
           (identifier)
-          (arithmetic_expr
+          (add_expression
             (lvalue
               (identifier))
             (int_literal)))
@@ -376,9 +386,10 @@ if (10 > 20) then 30 else 40
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (if_expr
-    (compare_expr
+    (compare_expression
       (int_literal)
       (int_literal))
     (int_literal)
@@ -395,9 +406,10 @@ if (5>4) then 13 else  " "
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (if_expr
-    (compare_expr
+    (compare_expression
       (int_literal)
       (int_literal))
     (int_literal)
@@ -413,12 +425,13 @@ while(10 > 5) do 5+6
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (while_expr
-    (compare_expr
+    (compare_expression
       (int_literal)
       (int_literal))
-    (arithmetic_expr
+    (add_expression
       (int_literal)
       (int_literal))))
 
@@ -433,7 +446,8 @@ for i:=10 to " " do
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (for_expr
     (identifier)
     (int_literal)
@@ -441,7 +455,7 @@ for i:=10 to " " do
     (assignment
       (lvalue
         (identifier))
-      (arithmetic_expr
+      (add_expression
         (lvalue
           (identifier))
         (int_literal)))))
@@ -461,7 +475,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (variable_dec
@@ -474,7 +489,7 @@ end
       (assignment
         (lvalue
           (identifier))
-        (arithmetic_expr
+        (add_expression
           (lvalue
             (identifier))
           (int_literal))))))
@@ -490,8 +505,9 @@ test13 - error - comparison of incompatible types
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
-  (compare_expr
+  (comment
+    (comment_block))
+  (compare_expression
     (int_literal)
     (string_literal)))
 
@@ -516,7 +532,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -553,7 +570,7 @@ end
           (int_literal)
           (int_literal))))
     (if_expr
-      (compare_expr
+      (compare_expression
         (lvalue
           (identifier))
         (lvalue
@@ -572,7 +589,8 @@ if 20 then 3
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (if_expr
     (int_literal)
     (int_literal)))
@@ -596,7 +614,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -643,9 +662,11 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
-    (comment)
+    (comment
+      (comment_block))
     (declaration
       (type_dec
         (type_id
@@ -699,7 +720,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (function_dec
@@ -715,7 +737,7 @@ end
           (identifier))
         (function_call
           (identifier)
-          (arithmetic_expr
+          (add_expression
             (lvalue
               (identifier))
             (int_literal)))
@@ -762,7 +784,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (function_dec
@@ -778,7 +801,7 @@ end
           (identifier))
         (function_call
           (identifier)
-          (arithmetic_expr
+          (add_expression
             (lvalue
               (identifier))
             (int_literal)))
@@ -813,12 +836,13 @@ while 10 > 5 do (i+1;())
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (while_expr
-    (compare_expr
+    (compare_expression
       (int_literal)
       (int_literal))
-    (arithmetic_expr
+    (add_expression
       (lvalue
         (identifier))
       (int_literal))))
@@ -843,9 +867,11 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
-    (comment)
+    (comment
+      (comment_block))
     (declaration
       (function_dec
         (identifier)
@@ -854,17 +880,17 @@ end
           (type_id
             (identifier)))
         (if_expr
-          (compare_expr
+          (compare_expression
             (lvalue
               (identifier))
             (int_literal))
           (int_literal)
-          (arithmetic_expr
+          (mul_expression
             (lvalue
               (identifier))
             (function_call
               (identifier)
-              (arithmetic_expr
+              (add_expression
                 (lvalue
                   (identifier))
                 (int_literal)))))))
@@ -888,7 +914,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -935,7 +962,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -985,7 +1013,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (variable_dec
@@ -1010,7 +1039,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (variable_dec
@@ -1032,8 +1062,9 @@ test26 - error - integer required
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
-  (arithmetic_expr
+  (comment
+    (comment_block))
+  (add_expression
     (int_literal)
     (string_literal)))
 
@@ -1053,7 +1084,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (variable_dec
@@ -1091,7 +1123,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -1148,7 +1181,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -1193,7 +1227,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -1236,7 +1271,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (variable_dec
@@ -1264,7 +1300,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -1296,7 +1333,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (variable_dec
@@ -1320,7 +1358,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (function_dec
@@ -1355,7 +1394,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (function_dec
@@ -1389,7 +1429,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (function_dec
@@ -1427,7 +1468,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (variable_dec
@@ -1455,7 +1497,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -1489,7 +1532,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (function_dec
@@ -1528,7 +1572,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (function_dec
@@ -1561,7 +1606,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -1618,7 +1664,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -1798,12 +1845,13 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (variable_dec
         (identifier)))
-    (arithmetic_expr
+    (add_expression
       (lvalue
         (identifier))
       (int_literal))))
@@ -1827,7 +1875,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -1865,7 +1914,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -1900,7 +1950,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -1918,10 +1969,10 @@ end
         (identifier)
         (type_id
           (identifier))))
-    (compare_expr
+    (compare_expression
       (lvalue
         (identifier)))
-    (compare_expr
+    (compare_expression
       (lvalue
         (identifier)))))
 
@@ -1944,7 +1995,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (type_dec
@@ -1983,7 +2035,8 @@ end
 --------------------------------------------------------------------------------
 
 (source_file
-  (comment)
+  (comment
+    (comment_block))
   (let_expr
     (declaration
       (function_dec

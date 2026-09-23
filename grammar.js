@@ -26,14 +26,14 @@ export default grammar({
   word: $ => $.identifier,
 
   rules: {
-    // TODO: add the actual grammar rules
     // a source_file is just an expression
-    source_file: $ => $._expression,
+    source_file: $ => $._binary_expression,
 
     comment: $ => seq("/*", optional($.comment_block), "*/"),
 
     identifier: _ => /[a-zA-Z][a-zA-Z0-9_]*/,
-    type_id: $ => $.identifier, // what is the actual type_id naming requirements?
+    // what is the actual type_id naming requirements?
+    type_id: $ => $.identifier,
     int_literal: _ => /[0-9]+/,
     string_literal: _ => token(seq(
       '"',
@@ -47,15 +47,17 @@ export default grammar({
       '"',
     )),
 
-    declaration: $ => repeat1(choice($.variable_dec, $.function_dec, $.type_dec)),
+    declaration: $ => repeat1(choice(
+      $.variable_dec, $.function_dec, $.type_dec
+    )),
 
     variable_dec: $ => seq("var", $.identifier,
-      optional(seq(":", $.type_id)), ":=", $._expression
+      optional(seq(":", $.type_id)), ":=", $._binary_expression
     ),
 
     function_dec: $ => seq(
       "function", $.identifier, "(", optional($.type_fields), ")",
-      optional(seq(":", $.type_id)), "=", $._expression
+      optional(seq(":", $.type_id)), "=", $._binary_expression
     ),
 
     type_dec: $ => seq("type", $.type_id, "=", $.type),
@@ -72,9 +74,7 @@ export default grammar({
       repeat(seq(",", $.identifier, ":", $.type_id)),
     ),
 
-    // in the appendix of Appel's compiler book it requires some typed expr but
-    // in the tree-sitter
-    _expression: $ => choice(
+    _primary_expression: $ => choice(
       $.lvalue,
       $.assignment,
       $.record,
@@ -89,31 +89,80 @@ export default grammar({
       $.let_expr,
       "break", // break should only be used in for or while loop
       "nil",
-      seq("(", $._expression, repeat1(seq(";", $._expression)), ")"),
+      seq(
+        "(", $._binary_expression,
+        repeat1(seq(";", $._binary_expression)), ")"
+      ),
       $.int_literal,
       $.string_literal,
-      // negation is more like a unary operation, has hight precedence
-      prec(7, seq("-", $._expression)),
-      $.arithmetic_expr,
-      $.compare_expr,
-      $.boolean_expr,
       $.array_expr,
-      seq("(", optional($._expression), ")"),
+      seq("(", optional($._binary_expression), ")"),
     ),
+
+    _unary_expression: $ => choice(
+      seq("-", $._unary_expression), $._primary_expression
+    ),
+
+    // Left recursion makes arithmetic and boolean operators left-associative;
+    // their right operands come from the next tighter level. Precedence
+    // annotations resolve boundaries with open-ended primary expressions,
+    // while the hidden rules shift to keep operators inside those bodies.
+    _mul_expression: $ => prec.right(choice(
+      $.mul_expression, $._unary_expression
+    )),
+    mul_expression: $ => prec.left(6, seq(
+      $._mul_expression, choice("*", "/"), $._unary_expression
+    )),
+
+    _add_expression: $ => prec.right(choice(
+      $.add_expression, $._mul_expression
+    )),
+    add_expression: $ => prec.left(5, seq(
+      $._add_expression, choice("+", "-"), $._mul_expression
+    )),
+
+    _compare_expression: $ => prec.right(choice(
+      $.compare_expression, $._add_expression
+    )),
+    // Neither operand recurses into comparison: parentheses are required
+    // to compare the result of another comparison.
+    compare_expression: $ => prec(4, seq(
+      $._add_expression,
+      choice("=", "<>", ">", "<", ">=", "<="),
+      $._add_expression,
+    )),
+
+    _and_expression: $ => prec.right(choice(
+      $.and_expression, $._compare_expression
+    )),
+    and_expression: $ => prec.left(3, seq(
+      $._and_expression, "&", $._compare_expression
+    )),
+
+    _or_expression: $ => prec.right(choice(
+      $.or_expression, $._and_expression
+    )),
+    or_expression: $ => prec.left(2, seq(
+      $._or_expression, "|", $._and_expression
+    )),
+
+    // Open-ended bodies (assignment, if, loops, array initialization)
+    // consume the complete expression that follows them.
+    _binary_expression: $ => prec.right($._or_expression),
 
     lvalue: $ => choice(
       $.identifier,
       seq($.lvalue, ".", $.identifier),
-      seq($.lvalue, "[", $._expression, "]"),
+      seq($.lvalue, "[", $._binary_expression, "]"),
     ),
 
-    assignment: $ => prec(1, seq($.lvalue, ":=", $._expression)),
+    assignment: $ => prec(1, seq($.lvalue, ":=", $._binary_expression)),
 
     record: $ => choice(
       seq($.type_id, "{", "}"),
       seq($.type_id, "{",
-        $.identifier, "=", $._expression,
-        repeat(seq(",", $.identifier, "=", $._expression)),
+        $.identifier, "=", $._binary_expression,
+        repeat(seq(",", $.identifier, "=", $._binary_expression)),
         "}"
       )
     ),
@@ -121,57 +170,39 @@ export default grammar({
     function_call: $ => choice(
       seq($.identifier, "(", ")"),
       seq($.identifier, "(",
-          $._expression, repeat(seq(",", $._expression)),
+          $._binary_expression, repeat(seq(",", $._binary_expression)),
         ")"),
     ),
 
     if_expr: $ => choice(
-      prec.right(seq("if", $._expression, "then", $._expression)),
+      prec.right(seq("if", $._binary_expression, "then", $._binary_expression)),
       prec.right(
-        seq("if", $._expression, "then", $._expression, "else", $._expression)
+        seq(
+          "if", $._binary_expression, "then", $._binary_expression,
+          "else", $._binary_expression
+        )
       ),
     ),
 
-    while_expr: $ => seq("while", $._expression, "do", $._expression),
+    while_expr: $ => seq(
+      "while", $._binary_expression, "do", $._binary_expression
+    ),
 
     for_expr: $ => seq(
-      "for", $.identifier, ":=", $._expression, "to", $._expression, "do",
-      $._expression
+      "for", $.identifier, ":=", $._binary_expression,
+      "to", $._binary_expression, "do", $._binary_expression
     ),
 
     let_expr: $ => choice(
       seq("let", optional($.declaration), "in", "end"),
-      seq("let", optional($.declaration), "in", $._expression, "end"),
+      seq("let", optional($.declaration), "in", $._binary_expression, "end"),
       seq("let", optional($.declaration), "in",
-        seq($._expression, repeat1(seq(";", $._expression))),
+        seq($._binary_expression, repeat1(seq(";", $._binary_expression))),
         "end"),
     ),
 
-    // apply to int type expr
-    arithmetic_expr: $ => choice(
-      prec.left(6, seq($._expression, "*", $._expression)),
-      prec.left(6, seq($._expression, "/", $._expression)),
-      prec.left(5, seq($._expression, "+", $._expression)),
-      prec.left(5, seq($._expression, "-", $._expression)),
+    array_expr: $ => seq(
+      $.type_id, "[", $._binary_expression, "]", "of", $._binary_expression
     ),
-
-    // apply to int and string type expr
-    // tree-sitter cannot use nonassoc to limit the assocativity for comparsion
-    // this is not expressive enough.
-    compare_expr: $ => choice(
-      prec.left(4, seq($._expression, "=", $._expression)),
-      prec.left(4, seq($._expression, "<>", $._expression)),
-      prec.left(4, seq($._expression, ">", $._expression)),
-      prec.left(4, seq($._expression, "<", $._expression)),
-      prec.left(4, seq($._expression, ">=", $._expression)),
-      prec.left(4, seq($._expression, "<=", $._expression)),
-    ),
-
-    boolean_expr: $ => choice(
-      prec.left(3, seq($._expression, "&", $._expression)),
-      prec.left(2, seq($._expression, "|", $._expression)),
-    ),
-
-    array_expr: $ => seq($.type_id, "[", $._expression, "]", "of", $._expression),
   }
 });
