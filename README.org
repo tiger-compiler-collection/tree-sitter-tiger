@@ -8,15 +8,28 @@ This is a simplest tree-sitter implementation for Tiger Language from Appel's
 If you are using Emacs, you can use the [[https://github.com/tiger-compiler-collection/tiger-ts-mode][tiger-ts-mode]] and download the latest
 release from this repository.
 
-** Todo
+** Expression grammar (0.1.2)
 
-Currently, this tree-sitter does not always render the comparison correctly
-because tree-sitter does not have an option similar to ~%nonassoc~ in yacc, see
-the issue [[https://github.com/tree-sitter/tree-sitter/issues/761][here]].
+Version 0.1.2 uses a layered expression grammar to enforce operator precedence
+and associativity. From highest to lowest precedence: unary minus, ~*~ and ~/~,
+~+~ and ~-~, comparisons (~=~, ~<>~, ~<~, ~<=~, ~>~, ~>=~), ~&~, and ~|~.
+Arithmetic and boolean binary operators are left-associative.
 
-This tree-sitter does not handle escape of one or more formatting characters (a
-subset of the non-printable characters including at least space, tab, newline,
-formfeed) in the string literals.
+Comparisons are non-associative: ~a < b < c~ is a syntax error. Parentheses are
+required to compare the result of another comparison, as in ~(a < b) < c~ or
+~a < (b < c)~. This is enforced by the grammar without a yacc-style ~%nonassoc~
+directive.
+
+Queries using the old expression node names need to be updated:
+
+- ~arithmetic_expr~ is now ~add_expression~ or ~mul_expression~.
+- ~compare_expr~ is now ~compare_expression~.
+- ~boolean_expr~ is now ~and_expression~ or ~or_expression~.
+
+** String literals
+
+String literals support formatting escapes: one or more spaces, tabs, newlines,
+carriage returns, or formfeeds enclosed by backslashes.
 
 ** License
 
